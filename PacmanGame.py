@@ -66,14 +66,19 @@ def draw():
         for j in range(31):
             table[j][i].draw_dot()
     pacman.check_position(table)
+    pacman.move(table)
     
 def keyPressed():
     if key == CODED:
         if keyCode == UP:
-            pacman.direction(0, -1)
+            pacman.dir = PVector(0, -1)
+            pacman.turn = True
         elif keyCode == DOWN:
-            pacman.direction(0, 1)
+            pacman.dir = PVector(0, 1)
+            pacman.turn = True
         elif keyCode == LEFT:
-            pacman.direction(-1, 0)
+            pacman.dir = PVector(-1, 0)
+            pacman.turn = True
         elif keyCode == RIGHT:
-            pacman.direction(1, 0)
+            pacman.dir = PVector(1, 0)
+            pacman.turn = True
