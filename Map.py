@@ -1,4 +1,4 @@
-class Map():
+class Map:
     
     def __init__(self, x, y):
         self.wall = False
@@ -7,7 +7,9 @@ class Map():
         self.eaten = False
         self.x = x
         self.y = y
-        
+    
+    #--- drawing on map ---#
+    
     def draw_dot(self):
         if self.small_dot:
             if not self.eaten:
