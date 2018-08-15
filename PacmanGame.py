@@ -3,6 +3,8 @@ import Map as m
 
 pacman = p.Pacman()
 
+#--- map representation ---#
+
 table = [[0 for i in range(28)] for j in range(31)]
 table_representation = \
 [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
@@ -37,7 +39,7 @@ table_representation = \
 [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 
-#---------------------------------------------------------------------------------------------------#
+#--- game code ---#
 
 def setup():
     frameRate(100)
@@ -61,13 +63,24 @@ def draw():
     img = loadImage("map.jpg")
     background(img)
     
-    pacman.draw_p()
+    #--- drawing pacman and map ---#
+    
+    pacman.draw_pacman()
+    
     for i in range(28):
         for j in range(31):
             table[j][i].draw_dot()
+    
+    #--- moving and checking pacman ---#
+    
     pacman.check_position(table)
     pacman.move(table)
-    
+    pacman.check_win()
+    if pacman.win:
+        print('YOU WIN')
+
+#--- commands ---#
+
 def keyPressed():
     if key == CODED:
         if keyCode == UP:
