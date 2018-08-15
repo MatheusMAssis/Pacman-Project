@@ -13,7 +13,7 @@ class Ghost:
         fill(255,0,0)
         ellipse(self.pos.x, self.pos.y, 20, 20)
     
-    #--- defining movements and restrictions for ghost ---#
+    #--- defining movements and walls for ghost ---#
     
     def move(self):
         if self.turn:
@@ -32,6 +32,10 @@ class Ghost:
                 else:
                     self.turn = True
                     return True
+            else:
+                self.vel = PVector(self.dir.x, self.dir.y)
+                self.turn = True
+                return True
         
         #--- else ---#
         
@@ -44,9 +48,8 @@ class Ghost:
             return True
         
     #--- using some method to make ghost move ---#
-    #at this moment, it is a little bit retarded
     
     def movement(self):
         if not self.turn:
-            self.dir *= -1
+            self.dir = PVector(-1, 0)
             self.turn = True
