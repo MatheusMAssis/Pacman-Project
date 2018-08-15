@@ -5,9 +5,10 @@ class Pacman:
         self.vel = PVector(-1, 0)
         self.dir = PVector(-1, 0)
         self.turn = False
+        self.win = False
         self.score = 0
   
-    def draw_p(self):
+    def draw_pacman(self):
         noStroke()
         fill(255, 235, 5)
         ellipse(self.pos.x, self.pos.y, 20, 20)
@@ -15,8 +16,15 @@ class Pacman:
     def move(self, table):
         if self.turn:
             self.pos.add(self.vel)
+            
+    def check_win(self):
+        if self.score == 246:
+            self.win = True
     
     def check_position(self, table):
+        
+        #--- if on critical position ---#
+        
         if ((self.pos.x - 8) % 16 == 0 and (self.pos.y - 8) % 16 == 0):
             m_pos = PVector((self.pos.x - 8) / 16, (self.pos.y - 8) / 16)
             if not table[floor(m_pos.y)][floor(m_pos.x)].eaten:
@@ -36,6 +44,9 @@ class Pacman:
                 self.vel = PVector(self.dir.x, self.dir.y)
                 self.turn = True
                 return True
+            
+        #--- else ---#
+        
         else:
             if (self.pos.x + 10 * self.vel.x - 8) % 16 == 0 and (self.pos.y + 10 * self.vel.y - 8) % 16 == 0:
                 m_pos = PVector((self.pos.x + 10 * self.vel.x - 8) / 16, (self.pos.y + 10 * self.vel.y - 8) / 16)
