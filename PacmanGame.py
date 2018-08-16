@@ -1,7 +1,9 @@
 import Pacman as p
 import Map as m
+import Ghost as g
 
 pacman = p.Pacman()
+ghost = g.Ghost()
 
 #--- map representation ---#
 
@@ -45,6 +47,7 @@ def setup():
     frameRate(100)
     size(448, 496)
     
+    
     for i in range(28):
         for j in range(31):
             table[j][i] = m.Map(16*i+8, 16*j+8)
@@ -65,11 +68,12 @@ def draw():
     
     #--- drawing pacman and map ---#
     
-    pacman.draw_pacman()
-    
     for i in range(28):
         for j in range(31):
             table[j][i].draw_dot()
+            
+    pacman.draw_pacman()
+    ghost.draw_ghost()
     
     #--- moving and checking pacman ---#
     
@@ -78,7 +82,11 @@ def draw():
     pacman.check_win()
     if pacman.win:
         print('YOU WIN')
-
+      
+    ghost.movement()
+    ghost.check_position(table)
+    ghost.move()
+    
 #--- commands ---#
 
 def keyPressed():
@@ -95,3 +103,7 @@ def keyPressed():
         elif keyCode == RIGHT:
             pacman.dir = PVector(1, 0)
             pacman.turn = True
+            
+#--- auxiliar function ---#
+  
+  #a* to find the shortest path between ghost and pacman
