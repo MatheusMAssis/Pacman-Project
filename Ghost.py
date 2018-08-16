@@ -5,12 +5,17 @@ class Ghost:
         self.vel = PVector(1, 0)
         self.dir = PVector(1, 0)
         self.turn = True
+        self.vulnerable = False
+    
+    #--- if pacman eats a big_dot ---#
+    #def vulnerable():
     
     #--- drawing ghost ---#
     
     def draw_ghost(self):
+        t = 0
         noStroke()
-        fill(255,0,0)
+        fill(255, 0, 0)
         ellipse(self.pos.x, self.pos.y, 20, 20)
 
     #--- defining movements and walls for ghost ---#
