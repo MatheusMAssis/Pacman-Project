@@ -12,7 +12,7 @@ class Ghost:
         noStroke()
         fill(255,0,0)
         ellipse(self.pos.x, self.pos.y, 20, 20)
-    
+
     #--- defining movements and walls for ghost ---#
     
     def move(self):
@@ -51,5 +51,12 @@ class Ghost:
     
     def movement(self):
         if not self.turn:
-            self.dir = PVector(-1, 0)
-            self.turn = True
+            num = random(0, 1)
+            if num <= 0.25:
+                self.dir = PVector(1, 0)
+            elif num <= 0.5:
+                self.dir = PVector(-1, 0)
+            elif num <= 0.75:
+                self.dir = PVector(0, 1)
+            else:
+                self.dir = PVector(0, -1)
