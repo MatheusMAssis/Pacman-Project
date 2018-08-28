@@ -1,3 +1,5 @@
+import time
+
 class Ghost:
     
     def __init__(self):
@@ -5,19 +7,27 @@ class Ghost:
         self.vel = PVector(1, 0)
         self.dir = PVector(1, 0)
         self.turn = True
-        self.vulnerable = False
-    
-    #--- if pacman eats a big_dot ---#
-    #def vulnerable():
-    
+        self.r = 255
+        self.g = 0
+        self.b = 0
+        
     #--- drawing ghost ---#
     
-    def draw_ghost(self):
-        t = 0
+    def draw_ghost(self, r, g, b):
         noStroke()
-        fill(255, 0, 0)
+        fill(r, g, b)
         ellipse(self.pos.x, self.pos.y, 20, 20)
 
+    #--- if pacman eats a big_dot ---#
+    
+    def vulnerable(self):
+        self.r = 0
+        value = random(0, 1)
+        if value <= 0.5:
+            self.b = 0
+        else:
+            self.b = 255
+    
     #--- defining movements and walls for ghost ---#
     
     def move(self):
@@ -61,16 +71,42 @@ class Ghost:
                 vect = PVector(self.pos.x - target.pos.x, self.pos.y - target.pos.y)
                 max_pos = max(abs(vect.x), abs(vect.y))
                 if max_pos == abs(vect.x):
-                    if max_pos == vect.x:
-                        self.dir = PVector(-1, 0)
-                        self.turn = True
+                    if self.turn:
+                        if max_pos == vect.x:
+                            if self.dir != PVector(1, 0):
+                                self.dir = PVector(-1, 0)
+                                self.turn = True
+                        else:
+                            if self.dir != PVector(-1, 0):
+                                self.dir = PVector(1, 0)
+                                self.turn = True
                     else:
-                        self.dir = PVector(1, 0)
-                        self.turn = True
+                        num = random(0,1)
+                        if num < 0.25:
+                            self.dir = PVector(1, 0)
+                        elif num < 0.5:
+                            self.dir = PVector(-1, 0)
+                        elif num < 0.75:
+                            self.dir = PVector(0, 1)
+                        else:
+                            self.dir = PVector(0, -1)
                 else:
-                    if max_pos == vect.y:
-                        self.dir = PVector(0, -1)
-                        self.turn = True
+                    if self.turn:
+                        if max_pos == vect.y:
+                            if self.dir != PVector(0, 1):
+                                self.dir = PVector(0, -1)
+                                self.turn = True
+                        else:
+                            if self.dir != PVector(0, -1):
+                                self.dir = PVector(0, 1)
+                                self.turn = True
                     else:
-                        self.dir = PVector(0, 1)
-                        self.turn = True
+                        num = random(0,1)
+                        if num < 0.25:
+                            self.dir = PVector(1, 0)
+                        elif num < 0.5:
+                            self.dir = PVector(-1, 0)
+                        elif num < 0.75:
+                            self.dir = PVector(0, 1)
+                        else:
+                            self.dir = PVector(0, -1)
