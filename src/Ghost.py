@@ -51,17 +51,26 @@ class Ghost:
                 return True
             self.turn = True
             return True
-        
+    
     #--- using some method to make ghost move ---#
     
-    def movement(self):
-        if not self.turn:
-            num = random(0, 1)
-            if num <= 0.25:
-                self.dir = PVector(1, 0)
-            elif num <= 0.5:
-                self.dir = PVector(-1, 0)
-            elif num <= 0.75:
-                self.dir = PVector(0, 1)
-            else:
-                self.dir = PVector(0, -1)
+    def movement(self, table, target):
+        if ((self.pos.x - 8) % 16 == 0 and (self.pos.y - 8) % 16 == 0):
+            m_pos = PVector((self.pos.x - 8) / 16, (self.pos.y - 8) / 16)
+            if table[floor(m_pos.y)][floor(m_pos.x)] == 4 or table[floor(m_pos.y)][floor(m_pos.x)] == 5:
+                vect = PVector(self.pos.x - target.pos.x, self.pos.y - target.pos.y)
+                max_pos = max(abs(vect.x), abs(vect.y))
+                if max_pos == abs(vect.x):
+                    if max_pos == vect.x:
+                        self.dir = PVector(-1, 0)
+                        self.turn = True
+                    else:
+                        self.dir = PVector(1, 0)
+                        self.turn = True
+                else:
+                    if max_pos == vect.y:
+                        self.dir = PVector(0, -1)
+                        self.turn = True
+                    else:
+                        self.dir = PVector(0, 1)
+                        self.turn = True
