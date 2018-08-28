@@ -73,11 +73,11 @@ def draw():
             table[j][i].draw_dot()
             
     pacman.draw_pacman()
-    ghost.draw_ghost()
+    ghost.draw_ghost(ghost.r, ghost.g, ghost.b)
     
     #--- moving and checking pacman ---#
     
-    pacman.check_position(table)
+    pacman.check_position(table, ghost)
     pacman.move(table)
     pacman.check_win()
     if pacman.win:
