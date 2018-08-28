@@ -1,3 +1,5 @@
+import time
+
 class Pacman:
     
     def __init__(self):
@@ -21,7 +23,7 @@ class Pacman:
         if self.score == 246:
             self.win = True
     
-    def check_position(self, table):
+    def check_position(self, table, ghost):
         
         #--- if on critical position ---#
         
@@ -30,8 +32,11 @@ class Pacman:
             if not table[floor(m_pos.y)][floor(m_pos.x)].eaten:
                 table[floor(m_pos.y)][floor(m_pos.x)].eaten = True
                 self.score += 1
-                
-                #if big_dot
+                if table[floor(m_pos.y)][floor(m_pos.x)].big_dot:
+                    t0 = time.time()
+                    while time.time() - t0 <= 10:
+                        ghost.vulnerable()
+                    ghost.r, ghost.b = 255, 0
                 
             if table[floor(m_pos.y + self.dir.y)][floor(m_pos.x + self.dir.x)].wall:
                 if table[floor(m_pos.y + self.vel.y)][floor(m_pos.x + self.vel.x)].wall:
@@ -53,8 +58,12 @@ class Pacman:
                 if not table[floor(m_pos.y)][floor(m_pos.x)].eaten:
                     table[floor(m_pos.y)][floor(m_pos.x)].eaten = True
                     self.score += 1
-                    
-                    #if big_dot
+                    if table[floor(m_pos.y)][floor(m_pos.x)].big_dot:
+                        t0 = time.time()
+                        while time.time() - t0 <= 10:
+                            ghost.vulnerable()
+                        ghost.r, ghost.b = 255, 0
+                        
                     
             if self.dir.x + self.vel.x == 0 and self.dir.y + self.vel.y == 0:
                 self.vel = PVector(self.dir.x, self.dir.y)
