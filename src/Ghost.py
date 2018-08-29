@@ -1,5 +1,3 @@
-import time
-
 class Ghost:
     
     def __init__(self):
@@ -62,6 +60,11 @@ class Ghost:
             self.turn = True
             return True
     
+    #--- changing direction ---#
+
+        
+    
+    
     #--- using some method to make ghost move ---#
     
     def movement(self, table, target):
@@ -80,16 +83,30 @@ class Ghost:
                             if self.dir != PVector(-1, 0):
                                 self.dir = PVector(1, 0)
                                 self.turn = True
+                    
+                                            
+                    #--- testing ---#
+                    
+                    
                     else:
-                        num = random(0,1)
-                        if num < 0.25:
-                            self.dir = PVector(1, 0)
-                        elif num < 0.5:
-                            self.dir = PVector(-1, 0)
-                        elif num < 0.75:
-                            self.dir = PVector(0, 1)
+                        if table[floor(m_pos.y) - 1][floor(m_pos.x)] == 1:
+                            if max_pos == vect.x:
+                                self.dir = PVector(0, -1)
+                                self.turn = True
+                            else:
+                                self.dir = PVector(0, 1)
+                                self.turn = True
+                        elif table[floor(m_pos.y) + 1][floor(m_pos.x)] == 1:
+                            if max_pos == vect.x:
+                                self.dir = PVector(0, 1)
+                                self.turn = True
+                            else:
+                                self.dir = PVector(0, -1)
+                                self.turn = True
                         else:
-                            self.dir = PVector(0, -1)
+                            self.dir = PVector(0, 1)
+                            self.turn = True
+                        
                 else:
                     if self.turn:
                         if max_pos == vect.y:
@@ -100,13 +117,27 @@ class Ghost:
                             if self.dir != PVector(0, -1):
                                 self.dir = PVector(0, 1)
                                 self.turn = True
+                    
+                    
+                    #--- testing ---#
+                    
+                    
                     else:
-                        num = random(0,1)
-                        if num < 0.25:
-                            self.dir = PVector(1, 0)
-                        elif num < 0.5:
-                            self.dir = PVector(-1, 0)
-                        elif num < 0.75:
-                            self.dir = PVector(0, 1)
+                        if table[floor(m_pos.y)][floor(m_pos.x) - 1] == 1:
+                            if max_pos == vect.x:
+                                print('aqui3')
+                                self.dir = PVector(-1, 0)
+                                self.turn = True
+                            else:
+                                self.dir = PVector(1, 0)
+                                self.turn = True
+                        elif table[floor(m_pos.y)][floor(m_pos.x) + 1] == 1:
+                            if max_pos == vect.x:
+                                self.dir = PVector(1, 0)
+                                self.turn = True
+                            else:
+                                self.dir = PVector(-1, 0)
+                                self.turn = True
                         else:
-                            self.dir = PVector(0, -1)
+                            self.dir = PVector(1, 0)
+                            self.turn = True
