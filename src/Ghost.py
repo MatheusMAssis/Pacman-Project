@@ -17,15 +17,11 @@ class Ghost:
         ellipse(self.pos.x, self.pos.y, 20, 20)
 
     #--- if pacman eats a big_dot ---#
-    
+    #not working
     def vulnerable(self):
         self.r = 0
-        value = random(0, 1)
-        if value <= 0.5:
-            self.b = 0
-        else:
-            self.b = 255
-    
+        self.b = 255
+        
     #--- defining movements and walls for ghost ---#
     
     def move(self):
