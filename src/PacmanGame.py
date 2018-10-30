@@ -4,6 +4,7 @@ import Ghost as g
 
 pacman = p.Pacman()
 ghost = g.Ghost()
+start_game = False
 
 #--- map representation ---#
 
@@ -61,33 +62,70 @@ def setup():
                 table[j][i].eaten = True
             
 def draw():
-    global pacman
-    
-    img = loadImage("map.jpg")
-    background(img)
-    
-    #--- drawing pacman and map ---#
-    
-    for i in range(28):
-        for j in range(31):
-            table[j][i].draw_dot()
+    global pacman, start_game
             
-    pacman.draw_pacman()
-    ghost.draw_ghost(ghost.r, ghost.g, ghost.b)
+    #--- home screen ---#
     
-    #--- moving and checking pacman ---#
+    if not start_game:
+        background(0)
+        fill(255)
+        textAlign(CENTER)
+        textSize(40)
+        text('PACMAN', width/2, height/2)
+        textSize(14)
+        text('version 1.0', width/2, height/2 + 20)
+        textSize(20)
+        text('CLICK TO START', width/2, height - 50)
+        textSize(10)
+        text('developed by: Matheus de Moncada Assis', width/2, 20)
+            
+    #--- game itself ---#
     
-    pacman.check_position(table, ghost)
-    pacman.move(table)
-    pacman.check_win()
-    if pacman.win:
-        print('YOU WIN')
-      
-    ghost.movement(table_representation, pacman)
-    ghost.check_position(table)
-    ghost.move()
+    else:
+        img = loadImage("map.jpg")
+        background(img)
+        
+        
+        #--- drawing pacman and map ---#
+        
+        for i in range(28):
+            for j in range(31):
+                table[j][i].draw_dot()
+                
+        pacman.draw_pacman()
+        ghost.draw_ghost(ghost.r, ghost.g, ghost.b)
+        
+        #--- moving and checking pacman ---#
+        
+        pacman.check_position(table, ghost)
+        pacman.move(table)
+        pacman.check_win()
+        if pacman.win:
+            print('YOU WIN')
+        
+        ghost.movement(table_representation, pacman)
+        ghost.check_position(table)
+        ghost.move()
+        
+        #--- testing if pacman was eaten by ghost ---#
+        
+        if dist(pacman.pos.x, pacman.pos.y, ghost.pos.x, ghost.pos.y) <= 16:
+            fill(255,255,255,200)
+            rect(0,0,width,height)
+            textSize(40)
+            fill(0)
+            textAlign(CENTER)
+            text('GAME OVER', width/2, height/2)
+            textSize(20)
+            noLoop()
+
+    #--- command to start the game ---#
     
-#--- commands ---#
+    if mousePressed:
+        if mouseX < width and mouseY < height:
+            start_game = True
+
+#--- movement for pacman ---#
 
 def keyPressed():
     if key == CODED:
